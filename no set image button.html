@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sweet Scentz — Cologne Decants</title>
+  <meta name="description" content="Buy 2ml, 5ml, and 10ml decants of popular colognes. Louis Vuitton Afternoon Swim, Jean Paul Gaultier Le Male Elixir, Emporio Armani Stronger With You Parfum, Valentino Extrados, Burberry Hero EDP, Prada Paradigm, Parfums de Marly Greenley, and Parfums de Marly Althaïr.">
+  <style>
+    :root{ --bg:#0b0c10; --card:#111318; --muted:#aab2c0; --text:#e9eef7; --brand:#4da3ff; --accent:#9cffd6; --danger:#ff6b6b; --ok:#3ddc97; }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0c10 0%,#0e1117 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    header{position:sticky;top:0;background:rgba(11,12,16,.8);backdrop-filter:blur(8px);border-bottom:1px solid #1a1f2b;z-index:10}
+    .wrap{max-width:1120px;margin:0 auto;padding:20px}
+    .topbar{display:flex;align-items:center;gap:16px;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+    .brand .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:0 0 0 3px rgba(77,163,255,.25)}
+    nav a{color:var(--muted);text-decoration:none;margin-left:16px}
+    nav a.active, nav a:hover{color:var(--text)}
+    .pill{border:1px solid #243048;padding:8px 12px;border-radius:999px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .hero{padding:36px 0 8px}
+    .hero h1{margin:0;font-size:28px}
+    .hero p{margin:6px 0 0;color:var(--muted)}
+    .card{background:var(--card);border:1px solid #1a1f2b;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+    .image-wrap{position:relative;aspect-ratio:3/4;background:linear-gradient(135deg,#1c2333,#111827);display:flex;align-items:center;justify-content:center}
+    .image-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+    .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#6e7a90;font-weight:600}
+    /* removed .image-tools styles */
+    .card .body{padding:14px}
+    .card h3{margin:0 0 6px;font-size:16px}
+    .muted{color:var(--muted);font-size:13px}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+    select, input[type="number"], input[type="text"], input[type="email"], textarea{
+      background:#0f1320;border:1px solid #273149;color:var(--text);border-radius:10px;padding:10px 12px;font-size:14px;outline:none;width:100%
+    }
+    select:hover, input:hover, textarea:hover{border-color:#34405c}
+    .btn{background:linear-gradient(135deg,#2b89ff,#5adbc7);border:none;color:#041424;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}
+    .btn:hover{filter:brightness(1.1)}
+    .btn.secondary{background:#182033;color:var(--text);border:1px solid #273149}
+    .btn.danger{background:linear-gradient(135deg,#ff8c8c,#ff6b6b);color:#2b0c0c}
+    .badge{padding:4px 8px;border-radius:999px;border:1px solid #273149;color:var(--muted);font-size:12px}
+    .products{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+    .footer{color:#7b879a;font-size:13px;padding:24px 0;border-top:1px solid #1a1f2b;margin-top:24px}
+    .cartbar{display:flex;align-items:center;gap:10px}
+    .cartbtn{position:relative}
+    .cartbtn .count{position:absolute;top:-6px;right:-6px;background:var(--brand);color:#041424;border-radius:999px;padding:2px 7px;font-size:12px;font-weight:800;border:2px solid #0b0c10}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #202636;padding:10px;text-align:left;font-size:14px}
+    .right{text-align:right}
+    .totals{display:flex;justify-content:flex-end;margin-top:10px}
+    .totals .box{min-width:320px;background:#0f1320;border:1px solid #273149;border-radius:12px;padding:12px}
+    .fieldgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+    .spacer{height:24px}
+    @media (max-width:700px){ .topbar{flex-direction:column;align-items:flex-start} }
+    a.link{color:var(--brand)}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>Sweet Scentz</div>
+      <span class="badge">Decants • 2ml / 5ml / 10ml</span>
+    </div>
+    <nav>
+      <a href="#shop" class="active">Shop</a>
+      <a href="#checkout">Checkout</a>
+    </nav>
+    <div class="cartbar">
+      <span class="pill">Free US shipping $75+</span>
+      <button class="btn secondary cartbtn" onclick="goCheckout()">
+        🛒 Cart <span class="count" id="cartCount">2</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="shop">
+    <h1>Your Favorite Colognes, By the Decant</h1>
+    <p class="muted">Choose a size, set quantity, and add to cart. Checkout emails your exact order to <strong>teeravmcgee@gmail.com</strong>.</p>
+  </section>
+
+  <!-- JS renders products -->
+  <section class="products" id="productGrid"></section>
+
+  <div class="spacer"></div>
+
+  <section id="checkout" class="grid">
+    <div style="grid-column: 1 / -1">
+      <h2>Checkout</h2>
+      <p class="muted">Review your cart, fill in your info, then click <em>Send Order Email</em>. Your email app opens with all details pre-filled.</p>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1">
+      <div class="body">
+        <div style="overflow:auto">
+          <table id="cartTable">
+            <thead>
+              <tr>
+                <th>Item</th><th>Size</th><th>Qty</th>
+                <th class="right">Price</th><th class="right">Subtotal</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="cartBody"><!-- JS renders cart --></tbody>
+          </table>
+        </div>
+
+        <div class="totals">
+          <div class="box">
+            <div style="display:flex;justify-content:space-between"><span>Subtotal</span><strong id="subtotal">$0.00</strong></div>
+            <div style="display:flex;justify-content:space-between;color:var(--muted)"><span>Shipping</span><span id="shipping">$5.00</span></div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:18px"><span>Total</span><strong id="grandTotal">$5.00</strong></div>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <h3>Contact &amp; Shipping</h3>
+        <div class="fieldgrid">
+          <div><label for="name">Full name</label><input id="name" type="text" placeholder="First Last"></div>
+          <div><label for="email">Email</label><input id="email" type="email" placeholder="you@example.com"></div>
+          <div style="grid-column: 1 / -1"><label for="address">Shipping address</label><input id="address" type="text" placeholder="Street, City, State, ZIP, Country"></div>
+          <div style="grid-column: 1 / -1"><label for="notes">Order notes (optional)</label><textarea id="notes" rows="3" placeholder="Any requests or special instructions?"></textarea></div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="row" style="justify-content:flex-end">
+          <button class="btn secondary" onclick="copySummary()">Copy Summary</button>
+          <button class="btn" onclick="sendOrder()">Send Order Email</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px">
+          Tip: If your device doesn’t have an email app configured, click <em>Copy Summary</em> and email it to
+          <a class="link" href="mailto:teeravmcgee@gmail.com">teeravmcgee@gmail.com</a>.
+        </p>
+
+        <details style="margin-top:8px">
+          <summary class="muted">View order summary text (for copy/paste)</summary>
+          <pre id="summaryBox" style="white-space:pre-wrap;background:#0b0f1c;border:1px solid #22304a;padding:12px;border-radius:8px;overflow:auto;max-height:240px"></pre>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap footer">
+    © <span id="year">2025</span> Sweet Scentz. Not affiliated with any brand. Decants are rebottled from authentic products.
+  </footer>
+</main>
+
+<script>
+/* ============================================================
+   EDIT PRICES HERE (per product, per size)
+   ============================================================ */
+const PRICES = {
+  "lv-afternoon-swim": { "2ml": 11,  "5ml": 27, "10ml": 53 },
+  "jpg-le-male-elixir": { "2ml": 5,  "5ml": 11, "10ml": 21 },
+  "armani-stronger-parfum": { "2ml": 5,  "5ml": 11, "10ml": 22 },
+  "valentino-extrados": { "2ml": 6,  "5ml": 15, "10ml": 30 },
+  "burberry-hero-edp": { "2ml": 6,  "5ml": 14, "10ml": 26 },
+  "prada-paradigm": { "2ml": 6,  "5ml": 15, "10ml": 27 },
+  "pdm-greenley": { "2ml": 10,  "5ml": 25, "10ml": 48 },
+  "pdm-althair": { "2ml": 10,  "5ml": 25, "10ml": 48 }
+};
+
+/* ---------- Shipping & Sizes ---------- */
+const SHIPPING_RULE = { thresholdFree: 75, flat: 5 };
+const SIZES = ["2ml","5ml","10ml"];
+
+/* ---------- Products with live image URLs ---------- */
+const PRODUCTS = [
+  {
+    id:"lv-afternoon-swim",
+    brand:"Louis Vuitton",
+    name:"Afternoon Swim",
+    note:"Citrus • Marine",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.53947.2x.avif",
+    alt:"Louis Vuitton Afternoon Swim bottle"
+  },
+  {
+    id:"jpg-le-male-elixir",
+    brand:"Jean Paul Gaultier",
+    name:"Le Male Elixir",
+    note:"Vanilla • Woody • Amber",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.81642.2x.avif",
+    alt:"Jean Paul Gaultier Le Male Elixir bottle"
+  },
+  {
+    id:"armani-stronger-parfum",
+    brand:"Emporio Armani",
+    name:"Stronger With You Parfum",
+    note:"Vanilla • Chestnut • Warm Spices",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.100895.2x.avif",
+    alt:"Emporio Armani Stronger With You Parfum bottle"
+  },
+  {
+    id:"valentino-extrados",
+    brand:"Valentino",
+    name:"Extrados",
+    note:"Designer Exclusive",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.101383.2x.avif",
+    alt:"Valentino Extrados bottle"
+  },
+  {
+    id:"burberry-hero-edp",
+    brand:"Burberry",
+    name:"Hero Eau de Parfum",
+    note:"Woody • Warm",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.75182.2x.avif",
+    alt:"Burberry Hero Eau de Parfum bottle"
+  },
+  {
+    id:"prada-paradigm",
+    brand:"Prada",
+    name:"Paradigm",
+    note:"Modern • Clean",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.110661.2x.avif",
+    alt:"Prada Paradigm bottle"
+  },
+  {
+    id:"pdm-greenley",
+    brand:"Parfums de Marly",
+    name:"Greenley",
+    note:"Green Apple • Fresh",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.62101.2x.avif",
+    alt:"Parfums de Marly Greenley bottle"
+  },
+  {
+    id:"pdm-althair",
+    brand:"Parfums de Marly",
+    name:"Althaïr",
+    note:"Vanilla • Woods • Musks",
+    image:"https://fimgs.net/mdimg/perfume-thumbs/375x500.84109.2x.avif",
+    alt:"Parfums de Marly Althaïr bottle"
+  },
+];
+
+/* ---------- (Optional) local override helpers remain harmless ---------- */
+const OVERRIDE_KEY = "image_overrides_v1";
+function getOverrides(){ try{ return JSON.parse(localStorage.getItem(OVERRIDE_KEY) || "{}"); }catch{ return {}; } }
+function setOverride(id, url){ const map = getOverrides(); if(url){ map[id]=url; } else { delete map[id]; } localStorage.setItem(OVERRIDE_KEY, JSON.stringify(map)); }
+function urlForProduct(p){ const map = getOverrides(); return map[p.id] || p.image; }
+
+/* ---------- State ---------- */
+let cart = JSON.parse(localStorage.getItem("cart_v1") || "[]");
+
+/* ---------- Helpers ---------- */
+const fmt = (n)=>"$"+(Math.round(n*100)/100).toFixed(2);
+
+function priceFor(id, size){
+  const row = PRICES[id] || {};
+  const val = Number(row[size]);
+  return Number.isFinite(val) ? val : 0;
+}
+
+function saveCart(){ localStorage.setItem("cart_v1", JSON.stringify(cart)); renderCart(); }
+
+function addToCart(id, size, qty){
+  qty = Math.max(1, parseInt(qty||1,10));
+  const key = id+"__"+size;
+  const existing = cart.find(it=>it.key===key);
+  const p = PRODUCTS.find(p=>p.id===id);
+  const unit = priceFor(id, size);
+
+  if(existing){ existing.qty += qty; existing.price = unit; }
+  else{
+    cart.push({ key, id, size, qty, price: unit, name: p.name, brand: p.brand });
+  }
+  saveCart();
+  location.hash = "#checkout";
+}
+
+function removeFromCart(key){ cart = cart.filter(it=>it.key!==key); saveCart(); }
+function setQty(key, qty){ const it = cart.find(x=>x.key===key); if(!it) return; it.qty = Math.max(1, parseInt(qty||1,10)); saveCart(); }
+
+function calcTotals(){
+  const subtotal = cart.reduce((s,it)=> s + it.price*it.qty, 0);
+  const shipping = subtotal >= SHIPPING_RULE.thresholdFree || subtotal===0 ? 0 : SHIPPING_RULE.flat;
+  return {subtotal, shipping, total: subtotal+shipping};
+}
+
+function buildSummaryText(){
+  const {subtotal, shipping, total} = calcTotals();
+  const lines = [];
+  lines.push("NEW ORDER");
+  lines.push("==============");
+  cart.forEach(it=>{
+    lines.push(`${it.brand} — ${it.name} | ${it.size}  x${it.qty}  @ ${fmt(it.price)}  = ${fmt(it.price*it.qty)}`);
+  });
+  if(cart.length===0) lines.push("(Cart empty)");
+  lines.push("—");
+  lines.push(`Subtotal: ${fmt(subtotal)}`);
+  lines.push(`Shipping: ${shipping===0 && subtotal>0 ? "FREE" : fmt(shipping)}`);
+  lines.push(`TOTAL: ${fmt(total)}`);
+  lines.push("");
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const notes = document.getElementById("notes").value.trim();
+  lines.push("Customer"); lines.push("--------");
+  lines.push(`Name: ${name || "(not provided)"}`);
+  lines.push(`Email: ${email || "(not provided)"}`);
+  lines.push(`Address: ${address || "(not provided)"}`);
+  if(notes) { lines.push(""); lines.push("Notes: " + notes); }
+  lines.push(""); lines.push("Placed via Sweet Scentz checkout.");
+  return lines.join("\n");
+}
+
+function updateSummaryBox(){ document.getElementById("summaryBox").textContent = buildSummaryText(); }
+
+function sendOrder(){
+  if(cart.length===0){ alert("Your cart is empty."); return; }
+  updateSummaryBox();
+  const subject = encodeURIComponent("New Cologne Order — Sweet Scentz");
+  const body = encodeURIComponent(buildSummaryText());
+  const to = "teeravmcgee@gmail.com";
+  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+}
+
+async function copySummary(){
+  updateSummaryBox();
+  try{ await navigator.clipboard.writeText(buildSummaryText()); alert("Order summary copied. Paste it into an email to teeravmcgee@gmail.com."); }
+  catch(e){ alert("Could not copy automatically. Select and copy the text shown instead."); }
+}
+
+function goCheckout(){ location.hash = "#checkout"; }
+
+/* ---------- Render (button markup removed) ---------- */
+function renderProducts(){
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = PRODUCTS.map(p=>{
+    const id = p.id;
+    const src = urlForProduct(p);
+    const alt = p.alt || (p.brand + " " + p.name);
+    const priceList = SIZES.map(s=>`${s} • ${fmt(priceFor(id, s))}`).join("  ·  ");
+    return `
+      <article class="card">
+        <div class="image-wrap">
+          <img src="${src}" alt="${alt}" loading="lazy"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="fallback" style="display:none">No Image</div>
+        </div>
+        <div class="body">
+          <h3>${p.brand} — ${p.name}</h3>
+          <div class="muted">${p.note || ""}</div>
+          <div class="muted" style="margin-top:4px">${priceList}</div>
+          <div class="row" style="margin-top:10px">
+            <label class="muted">Size</label>
+            <select id="size-${id}">
+              ${SIZES.map(s=>`<option value="${s}">${s} • ${fmt(priceFor(id, s))}</option>`).join("")}
+            </select>
+          </div>
+          <div class="row">
+            <label class="muted">Qty</label>
+            <input id="qty-${id}" type="number" value="1" min="1" style="max-width:100px" />
+            <button class="btn" onclick="addToCart('${id}', document.getElementById('size-${id}').value, document.getElementById('qty-${id}').value)">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function renderCart(){
+  const tbody = document.getElementById("cartBody");
+  const count = cart.reduce((n,it)=>n+it.qty,0);
+  document.getElementById("cartCount").textContent = count;
+  if(cart.length===0){
+    tbody.innerHTML = `<tr><td colspan="6" class="muted">Your cart is empty.</td></tr>`;
+  }else{
+    tbody.innerHTML = cart.map(it=>{
+      const sub = it.price * it.qty;
+      return `
+        <tr>
+          <td>${it.brand} — ${it.name}</td>
+          <td>${it.size}</td>
+          <td><input type="number" min="1" value="${it.qty}" style="max-width:90px" onchange="setQty('${it.key}', this.value)" /></td>
+          <td class="right">${fmt(it.price)}</td>
+          <td class="right">${fmt(sub)}</td>
+          <td class="right"><button class="btn danger" onclick="removeFromCart('${it.key}')">Remove</button></td>
+        </tr>
+      `;
+    }).join("");
+  }
+  const {subtotal, shipping, total} = calcTotals();
+  document.getElementById("subtotal").textContent = fmt(subtotal);
+  document.getElementById("shipping").textContent = shipping===0 && subtotal>0 ? "FREE" : fmt(shipping);
+  document.getElementById("grandTotal").textContent = fmt(total);
+  updateSummaryBox();
+}
+
+/* ---------- Init ---------- */
+renderProducts();
+renderCart();
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
