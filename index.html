@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sweet Scentz — Cologne Decants</title>
+  <title>Good Smellz — Cologne Decants</title>
   <meta name="description" content="Buy 2ml, 5ml, and 10ml decants of popular colognes. Louis Vuitton Afternoon Swim, Jean Paul Gaultier Le Male Elixir, Emporio Armani Stronger With You Parfum, Valentino Extrados, Burberry Hero EDP, Prada Paradigm, Parfums de Marly Greenley, and Parfums de Marly Althaïr.">
   <style>
     :root{ --bg:#0b0c10; --card:#111318; --muted:#aab2c0; --text:#e9eef7; --brand:#4da3ff; --accent:#9cffd6; --danger:#ff6b6b; --ok:#3ddc97; }
@@ -304,7 +304,7 @@ function buildSummaryText(){
   lines.push(`Email: ${email || "(not provided)"}`);
   lines.push(`Address: ${address || "(not provided)"}`);
   if(notes) { lines.push(""); lines.push("Notes: " + notes); }
-  lines.push(""); lines.push("Placed via Sweet Scentz checkout.");
+  lines.push(""); lines.push("Placed via Good Smellz checkout.");
   return lines.join("\n");
 }
 
@@ -313,7 +313,7 @@ function updateSummaryBox(){ document.getElementById("summaryBox").textContent =
 function sendOrder(){
   if(cart.length===0){ alert("Your cart is empty."); return; }
   updateSummaryBox();
-  const subject = encodeURIComponent("New Cologne Order — Sweet Scentz");
+  const subject = encodeURIComponent("New Cologne Order — Good Smellz");
   const body = encodeURIComponent(buildSummaryText());
   const to = "teeravmcgee@gmail.com";
   window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
